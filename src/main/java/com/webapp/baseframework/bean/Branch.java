@@ -23,12 +23,12 @@ public class Branch implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany(mappedBy = "branch")
     private List<Step> steps;
-    private BlockingCapability type;
+    private BranchBlockingStatus type;
     @ManyToOne
     private Process process;
 
@@ -56,11 +56,11 @@ public class Branch implements Serializable {
         this.steps = steps;
     }
 
-    public BlockingCapability getType() {
+    public BranchBlockingStatus getType() {
         return type;
     }
 
-    public void setType(BlockingCapability type) {
+    public void setType(BranchBlockingStatus type) {
         this.type = type;
     }
 

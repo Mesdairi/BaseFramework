@@ -28,7 +28,7 @@ public class Output implements Serializable {
     @OneToOne(mappedBy = "output")
     private ProvidedInterfaceItem providedInterfaceItem;
     @OneToOne(mappedBy = "output")
-    private Result result;
+    private ResultItem result;
 
     public Long getId() {
         return id;
@@ -62,11 +62,11 @@ public class Output implements Serializable {
         this.providedInterfaceItem = providedInterfaceItem;
     }
 
-    public Result getResult() {
+    public ResultItem getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(ResultItem result) {
         this.result = result;
     }
  

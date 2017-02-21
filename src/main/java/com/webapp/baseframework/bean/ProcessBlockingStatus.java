@@ -9,10 +9,8 @@ package com.webapp.baseframework.bean;
  *
  * @author ESDAIRI
  */
-public enum ResultType {
+public enum ProcessBlockingStatus {
     
-    MAXIMISE,
-    MINIMISE,
-    AVERAGE,
-    
+    ACTION_BLOCKING,
+    NON_ACTION_BLOCKING,
 }

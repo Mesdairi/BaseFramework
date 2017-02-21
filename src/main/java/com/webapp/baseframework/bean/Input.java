@@ -20,9 +20,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Input implements Serializable {
 
-    @OneToOne(mappedBy = "input")
-    private ConstraintItem constraintItem;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +28,8 @@ public class Input implements Serializable {
     private String name;
     @ManyToOne
     private ProvidedInterfaceItem providedInterfaceItem;
+    @OneToOne(mappedBy = "input")
+    private ConstraintItem constraintItem;
 
     public Long getId() {
         return id;
@@ -63,7 +62,15 @@ public class Input implements Serializable {
     public void setProvidedInterfaceItem(ProvidedInterfaceItem providedInterfaceItem) {
         this.providedInterfaceItem = providedInterfaceItem;
     }
-    
+
+    public ConstraintItem getConstraintItem() {
+        return constraintItem;
+    }
+
+    public void setConstraintItem(ConstraintItem constraintItem) {
+        this.constraintItem = constraintItem;
+    }
+
     
     
     @Override

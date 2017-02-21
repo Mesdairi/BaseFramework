@@ -6,11 +6,12 @@
 package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -18,18 +19,17 @@ import javax.persistence.OneToOne;
  * @author ESDAIRI
  */
 @Entity
-public class Result implements Serializable {
-
-    @ManyToOne
-    private Action action;
+public class Resutl implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToMany(mappedBy = "resutl")
+    private List<ResultItem> resultItems;
     @OneToOne
-    private Output output;
-    private ResultType type;
+    private Action action;
+    
 
     public Long getId() {
         return id;
@@ -39,24 +39,24 @@ public class Result implements Serializable {
         this.id = id;
     }
 
-    public Output getOutput() {
-        return output;
+    public List<ResultItem> getResultItems() {
+        return resultItems;
     }
 
-    public void setOutput(Output output) {
-        this.output = output;
+    public void setResultItems(List<ResultItem> resultItems) {
+        this.resultItems = resultItems;
     }
 
-    public ResultType getType() {
-        return type;
+    public Action getAction() {
+        return action;
     }
 
-    public void setType(ResultType type) {
-        this.type = type;
+    public void setAction(Action action) {
+        this.action = action;
     }
-
     
     
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -67,10 +67,10 @@ public class Result implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Result)) {
+        if (!(object instanceof Resutl)) {
             return false;
         }
-        Result other = (Result) object;
+        Resutl other = (Resutl) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -79,7 +79,7 @@ public class Result implements Serializable {
 
     @Override
     public String toString() {
-        return "com.webapp.baseframework.bean.Result[ id=" + id + " ]";
+        return "com.webapp.baseframework.bean.Resutl[ id=" + id + " ]";
     }
     
 }

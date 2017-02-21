@@ -23,7 +23,7 @@ public class Action implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany(mappedBy = "action")
@@ -32,8 +32,8 @@ public class Action implements Serializable {
     private Constrainte constrainte;
     @OneToOne
     private Goal goal;
-    @OneToMany(mappedBy = "action")
-    private List<Result> results;
+    @OneToOne
+    private Resutl resutl;
     
     public Long getId() {
         return id;
@@ -75,13 +75,14 @@ public class Action implements Serializable {
         this.goal = goal;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public Resutl getResutl() {
+        return resutl;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setResutl(Resutl resutl) {
+        this.resutl = resutl;
     }
+
     
     
 

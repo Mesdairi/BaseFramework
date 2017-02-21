@@ -6,13 +6,11 @@
 package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -20,37 +18,17 @@ import javax.persistence.OneToOne;
  * @author ESDAIRI
  */
 @Entity
-public class Domaine implements Serializable {
+public class ResultItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    @OneToMany(mappedBy = "domain")
-    private List<SubDomain> subDomains;
-    @OneToMany(mappedBy = "domaine")
-    private List<Domaine> associatedDomains;
+    @OneToOne
+    private Output output;
+    private ResultType type;
     @ManyToOne
-    private Domaine domaine;
-    @OneToOne(mappedBy = "principalDomaine")
-    private Goal goal;
-
-    public List<SubDomain> getSubDomains() {
-        return subDomains;
-    }
-
-    public void setSubDomains(List<SubDomain> subDomains) {
-        this.subDomains = subDomains;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Resutl resutl;
 
     public Long getId() {
         return id;
@@ -60,30 +38,31 @@ public class Domaine implements Serializable {
         this.id = id;
     }
 
-    public List<Domaine> getAssociatedDomains() {
-        return associatedDomains;
+    public Output getOutput() {
+        return output;
     }
 
-    public void setAssociatedDomains(List<Domaine> associatedDomains) {
-        this.associatedDomains = associatedDomains;
+    public void setOutput(Output output) {
+        this.output = output;
     }
 
-    public Domaine getDomaine() {
-        return domaine;
+    public ResultType getType() {
+        return type;
     }
 
-    public void setDomaine(Domaine domaine) {
-        this.domaine = domaine;
+    public void setType(ResultType type) {
+        this.type = type;
     }
 
-    public Goal getGoal() {
-        return goal;
+    public Resutl getResutl() {
+        return resutl;
     }
 
-    public void setGoal(Goal goal) {
-        this.goal = goal;
+    public void setResutl(Resutl resutl) {
+        this.resutl = resutl;
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -94,10 +73,10 @@ public class Domaine implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Domaine)) {
+        if (!(object instanceof ResultItem)) {
             return false;
         }
-        Domaine other = (Domaine) object;
+        ResultItem other = (ResultItem) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -106,7 +85,7 @@ public class Domaine implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return "com.webapp.baseframework.bean.Result[ id=" + id + " ]";
     }
 
 }

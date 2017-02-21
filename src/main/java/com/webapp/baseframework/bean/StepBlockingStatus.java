@@ -9,10 +9,9 @@ package com.webapp.baseframework.bean;
  *
  * @author ESDAIRI
  */
-public enum ResultType {
+public enum StepBlockingStatus {
     
-    MAXIMISE,
-    MINIMISE,
-    AVERAGE,
+    BANCHE_BLOCKING,
+    NON_BANCHE_BLOCKING,
     
 }

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,14 +26,16 @@ public class Process implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany(mappedBy = "process")
     private List<Branch> branchs;
-    private BlockingCapability type;
+    private ProcessBlockingStatus type;
     @ManyToOne
     private Action action;
+    @OneToOne
+    private Constrainte constrainte;
 
     public Long getId() {
         return id;
@@ -58,12 +61,28 @@ public class Process implements Serializable {
         this.branchs = branchs;
     }
 
-    public BlockingCapability getType() {
+    public ProcessBlockingStatus getType() {
         return type;
     }
 
-    public void setType(BlockingCapability type) {
+    public void setType(ProcessBlockingStatus type) {
         this.type = type;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public Constrainte getConstrainte() {
+        return constrainte;
+    }
+
+    public void setConstrainte(Constrainte constrainte) {
+        this.constrainte = constrainte;
     }
     
     

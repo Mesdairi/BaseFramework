@@ -9,9 +9,7 @@ package com.webapp.baseframework.bean;
  *
  * @author ESDAIRI
  */
-public enum BlockingCapability {
-    
-    BLOCKING,
-    NON_BLOCKING,
-    
+public enum BranchBlockingStatus {
+        PROCESS_BLOCKING,
+        NON_PROCESS_BLOCKING,
 }

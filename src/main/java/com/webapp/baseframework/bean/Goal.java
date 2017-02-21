@@ -19,16 +19,16 @@ import javax.persistence.OneToOne;
 @Entity
 public class Goal implements Serializable {
 
-    @OneToOne(mappedBy = "goal")
-    private Action action;
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToOne
     private Domaine principalDomaine;
+    @OneToOne(mappedBy = "goal")
+    private Action action;
 
     public Long getId() {
         return id;
@@ -52,6 +52,14 @@ public class Goal implements Serializable {
 
     public void setPrincipalDomaine(Domaine principalDomaine) {
         this.principalDomaine = principalDomaine;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
     
     

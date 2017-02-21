@@ -22,14 +22,14 @@ public class Step implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToOne
     private ProvidedInterfaceItem providedInterfaceItem;
     @OneToOne
     private Constrainte constrainte;
-    private BlockingCapability type;
+    private StepBlockingStatus type;
     @ManyToOne
     private Branch branch;
 
@@ -57,11 +57,11 @@ public class Step implements Serializable {
         this.constrainte = constrainte;
     }
 
-    public BlockingCapability getType() {
+    public StepBlockingStatus getType() {
         return type;
     }
 
-    public void setType(BlockingCapability type) {
+    public void setType(StepBlockingStatus type) {
         this.type = type;
     }
 
@@ -72,6 +72,16 @@ public class Step implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+    
+    
 
     @Override
     public int hashCode() {

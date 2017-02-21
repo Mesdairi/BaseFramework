@@ -10,11 +10,12 @@ package com.webapp.baseframework.bean;
  * @author ESDAIRI
  */
 public enum CriticalValueType {
-        MIN,
-        MAX,
+        GREATER_THAN,
+        SMALLER_THAN,
         DIFFERENT,
         EQUAL,
- 
+
+        
     
     
 }

@@ -33,7 +33,7 @@ public class Action implements Serializable {
     @OneToOne
     private Goal goal;
     @OneToOne
-    private Resutl resutl;
+    private Result resutl;
     
     public Long getId() {
         return id;
@@ -75,11 +75,11 @@ public class Action implements Serializable {
         this.goal = goal;
     }
 
-    public Resutl getResutl() {
+    public Result getResutl() {
         return resutl;
     }
 
-    public void setResutl(Resutl resutl) {
+    public void setResutl(Result resutl) {
         this.resutl = resutl;
     }
 

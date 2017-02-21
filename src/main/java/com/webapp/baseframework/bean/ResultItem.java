@@ -28,7 +28,7 @@ public class ResultItem implements Serializable {
     private Output output;
     private ResultType type;
     @ManyToOne
-    private Resutl resutl;
+    private Result resutl;
 
     public Long getId() {
         return id;
@@ -54,11 +54,11 @@ public class ResultItem implements Serializable {
         this.type = type;
     }
 
-    public Resutl getResutl() {
+    public Result getResutl() {
         return resutl;
     }
 
-    public void setResutl(Resutl resutl) {
+    public void setResutl(Result resutl) {
         this.resutl = resutl;
     }
 

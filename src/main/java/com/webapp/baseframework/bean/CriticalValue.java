@@ -19,17 +19,15 @@ import javax.persistence.ManyToOne;
 @Entity
 public class CriticalValue implements Serializable {
 
-    
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Object value;
+    private String theValueType;
+    private String theValue;
     private CriticalValueType type;
     @ManyToOne
     private ConstraintItem constraintItem;
-    
 
     public Long getId() {
         return id;
@@ -39,16 +37,6 @@ public class CriticalValue implements Serializable {
         this.id = id;
     }
 
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
-
-    
-    
     public CriticalValueType getType() {
         return type;
     }
@@ -64,8 +52,22 @@ public class CriticalValue implements Serializable {
     public void setConstraintItem(ConstraintItem constraintItem) {
         this.constraintItem = constraintItem;
     }
-    
-    
+
+    public String getTheValueType() {
+        return theValueType;
+    }
+
+    public void setTheValueType(String theValueType) {
+        this.theValueType = theValueType;
+    }
+
+    public String getTheValue() {
+        return theValue;
+    }
+
+    public void setTheValue(String theValue) {
+        this.theValue = theValue;
+    }
 
     @Override
     public int hashCode() {
@@ -91,6 +93,5 @@ public class CriticalValue implements Serializable {
     public String toString() {
         return "com.webapp.baseframework.bean.CriticalValue[ id=" + id + " ]";
     }
-    
- 
+
 }

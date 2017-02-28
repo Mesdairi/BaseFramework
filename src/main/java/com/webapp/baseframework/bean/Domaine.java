@@ -6,14 +6,13 @@
 package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -21,29 +20,19 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Domaine implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "domain")
-    private List<SubDomain> subDomains;
     @OneToMany(mappedBy = "domaine")
-    private List<Domaine> associatedDomains;
-    @ManyToOne
-    private Domaine domaine;
-    @OneToOne(mappedBy = "principalDomaine")
-    private Goal goal;
-
-    public List<SubDomain> getSubDomains() {
-        return subDomains;
-    }
-
-    public void setSubDomains(List<SubDomain> subDomains) {
-        this.subDomains = subDomains;
-    }
-
+    private List<Component> components;
+    @OneToMany(mappedBy = "sourceDomaine")
+    private List<AssociatedDomains> sourceDomains; 
+    @OneToMany(mappedBy = "destinationDomaine")
+    private List<AssociatedDomains> destinationDomains;
+   
     public String getName() {
         return name;
     }
@@ -60,30 +49,41 @@ public class Domaine implements Serializable {
         this.id = id;
     }
 
-    public List<Domaine> getAssociatedDomains() {
-        return associatedDomains;
+    public List<Component> getComponents() {
+        if (components == null) {
+            components = new ArrayList();
+        }
+        return components;
     }
 
-    public void setAssociatedDomains(List<Domaine> associatedDomains) {
-        this.associatedDomains = associatedDomains;
+    public void setComponents(List<Component> components) {
+        this.components = components;
     }
 
-    public Domaine getDomaine() {
-        return domaine;
+    public List<AssociatedDomains> getSourceDomains() {
+        if (sourceDomains == null) {
+            sourceDomains = new ArrayList();
+        }
+        return sourceDomains;
     }
 
-    public void setDomaine(Domaine domaine) {
-        this.domaine = domaine;
+    public void setSourceDomains(List<AssociatedDomains> sourceDomains) {
+        this.sourceDomains = sourceDomains;
     }
 
-    public Goal getGoal() {
-        return goal;
+    public List<AssociatedDomains> getDestinationDomains() {
+        if (destinationDomains == null) {
+            destinationDomains = new ArrayList();
+        }
+        return destinationDomains;
     }
 
-    public void setGoal(Goal goal) {
-        this.goal = goal;
+    public void setDestinationDomains(List<AssociatedDomains> destinationDomains) {
+        this.destinationDomains = destinationDomains;
     }
 
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

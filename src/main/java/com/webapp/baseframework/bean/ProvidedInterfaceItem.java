@@ -35,8 +35,6 @@ public class ProvidedInterfaceItem implements Serializable {
     private List<Input> inputs;
     @ManyToOne
     private ProvidedInterface providedInterface;
-    @OneToOne(mappedBy = "providedInterfaceItem")
-    private Step step;
     
     public String getName() {
         return name;
@@ -77,15 +75,6 @@ public class ProvidedInterfaceItem implements Serializable {
     public void setInputs(List<Input> inputs) {
         this.inputs = inputs;
     }
-
-    public Step getStep() {
-        return step;
-    }
-
-    public void setStep(Step step) {
-        this.step = step;
-    }
-    
     
 
     @Override

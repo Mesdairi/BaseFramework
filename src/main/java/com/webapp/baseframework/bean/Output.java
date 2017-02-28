@@ -27,8 +27,6 @@ public class Output implements Serializable {
     private String name;
     @OneToOne(mappedBy = "output")
     private ProvidedInterfaceItem providedInterfaceItem;
-    @OneToOne(mappedBy = "output")
-    private ResultItem result;
 
     public Long getId() {
         return id;
@@ -62,15 +60,6 @@ public class Output implements Serializable {
         this.providedInterfaceItem = providedInterfaceItem;
     }
 
-    public ResultItem getResult() {
-        return result;
-    }
-
-    public void setResult(ResultItem result) {
-        this.result = result;
-    }
- 
-    
     
     @Override
     public int hashCode() {

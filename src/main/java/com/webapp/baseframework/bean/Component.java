@@ -20,6 +20,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Component implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,17 +29,9 @@ public class Component implements Serializable {
     private String name;
     private String componentPath;
     @ManyToOne
-    private SubDomain subDomain;
+    private Domaine domaine;
     @OneToOne(mappedBy = "component")
     private ProvidedInterface providedInterface;
-
-    public SubDomain getSubDomain() {
-        return subDomain;
-    }
-
-    public void setSubDomain(SubDomain subDomain) {
-        this.subDomain = subDomain;
-    }
 
     public ProvidedInterface getProvidedInterface() {
         return providedInterface;
@@ -70,6 +64,16 @@ public class Component implements Serializable {
     public void setComponentPath(String componentPath) {
         this.componentPath = componentPath;
     }
+
+    public Domaine getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(Domaine domaine) {
+        this.domaine = domaine;
+    }
+    
+    
     
     @Override
     public int hashCode() {

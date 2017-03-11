@@ -18,21 +18,21 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ProvidedInterfaceFacade extends AbstractFacade<ProvidedInterface> {
 
-    @PersistenceContext(unitName = "base_framework")
+    @PersistenceContext(unitName = "com.webapp_BaseFramework_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    public ProvidedInterface findProvidedInterfaceByComponent(Component c){
-    return  (ProvidedInterface) em.createQuery("SELECT p FROM ProvidedInterface p WHERE p.component.id="+c.getId()).getResultList().get(0);
+
+    public ProvidedInterface findProvidedInterfaceByComponent(Component component) {
+        return (ProvidedInterface) em.createQuery("SELECT p FROM ProvidedInterface p WHERE p.component.id=" + component.getId()).getResultList().get(0);
 //    return c.getProvidedInterface();
     }
 
     public ProvidedInterfaceFacade() {
         super(ProvidedInterface.class);
     }
-    
+
 }

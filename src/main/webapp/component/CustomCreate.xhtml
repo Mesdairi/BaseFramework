@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateComponentTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+
+            <h:form id="CustomComponentCreateForm">
+                <div class="ui-grid">
+                    <p:panel id="CustomComponentCreateFormPanel" header="#{bundle.CreateComponentTitle}" style="margin-bottom:20px" >
+                        <div class="ui-grid-row">
+                            <!--                            <div class="ui-grid-col-1"></div>-->
+                            <div class="ui-grid-col-4">  
+                                <p:panel> 
+                                    <p:panelGrid columns="2" id="ComponentPanelGrid">   
+                                        <p:outputLabel value="#{bundle.CreateComponentLabel_domaine}" for="domaine" />
+                                        <p:selectOneMenu id="domaine" value="#{componentController.selectedComponent.domaine}" >
+                                            <f:selectItems value="#{componentController.domaines}"
+                                                           var="domaineItem"
+                                                           itemValue="#{domaineItem}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="#{bundle.CreateComponentLabel_name}" for="name" />
+                                        <p:inputText id="name" value="#{componentController.selectedComponent.name}" title="#{bundle.CreateComponentTitle_name}" />
+                                        <p:outputLabel value="#{bundle.CreateComponentLabel_componentPath}" for="componentPath" />
+                                        <p:inputText id="componentPath" value="#{componentController.selectedComponent.componentPath}" title="#{bundle.CreateComponentTitle_componentPath}" />
+                                        <p:outputLabel value="#{bundle.CreateProvidedInterfaceLabel_name}" for="providedInterface" />
+                                        <p:inputText id="providedInterface" value="#{componentController.selectedProvidedInterface.name}" title="#{bundle.ProvidedInterfaceTitle_name}" />
+                                        <p:commandButton value="#{bundle.Save}" actionListener="#{componentController.create()}" />
+                                    </p:panelGrid>
+                                </p:panel>    
+                            </div>
+                            <div class="ui-grid-col-4">   
+                                <p:panel> 
+                                    <p:panelGrid columns="2" id="ProvidedInterfaceItemPanelGrid">
+                                        <p:outputLabel value="#{bundle.CreateProvidedInterfaceItemLabel_name}" for="providedInterfaceItem" />
+                                        <p:inputText id="providedInterfaceItem" value="#{componentController.selectedProvidedInterfaceItem.name}" title="#{bundle.CreateProvidedInterfaceItemTitle_name}" />
+                                        <p:outputLabel value="#{bundle.CreateOutputLabel_name}" for="outputName" />
+                                        <p:inputText id="outputName" value="#{componentController.selectedProvidedInterfaceItem.output.name}" title="#{bundle.CreateOutputTitle_name}" />
+                                        <p:outputLabel value="#{bundle.CreateOutputLabel_type}" for="outputType" />
+                                        <p:inputText id="outputType" value="#{componentController.selectedProvidedInterfaceItem.output.type}" title="#{bundle.CreateOutputTitle_type}" />
+                                        <p:commandButton value="#{bundle.Save}" actionListener="#{componentController.addProvidedInterfaceItem()}" />
+                                        <p:commandButton value="#{bundle.Delete}" actionListener="#{componentController.removeProvidedInterfaceItem()}" />
+                                    </p:panelGrid>
+                                </p:panel> 
+                            </div>
+                            <div class="ui-grid-col-4"> 
+                                <p:panel> 
+                                    <p:panelGrid columns="2" id="inputPanelGrid">
+                                        <p:outputLabel value="#{bundle.CreateInputLabel_name}" for="inputName" />
+                                        <p:inputText id="inputName" value="#{componentController.selectedInput.name}" title="#{bundle.CreateOutputTitle_name}" />
+                                        <p:outputLabel value="#{bundle.CreateInputLabel_type}" for="inputType" />
+                                        <p:inputText id="inputType" value="#{componentController.selectedInput.type}" title="#{bundle.CreateOutputTitle_type}" />
+                                        <p:commandButton value="#{bundle.Save}" actionListener="#{componentController.addInput()}" />
+                                        <p:commandButton value="#{bundle.Delete}" actionListener="#{componentController.removeInput()}" />
+                                    </p:panelGrid>
+                                </p:panel> 
+                            </div>
+                            <!--<div class="ui-grid-col-1"></div>-->
+                        </div>
+                    </p:panel>
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-10">
+                            <p:panel header="Comonent List">
+                                <p:dataTable id="datalist" value="#{componentController.components}" var="item"
+                                             selectionMode="single" selection="#{componentController.selectedComponent}"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             initMode="immediate"
+                                             >
+
+                                    <p:ajax event="rowSelect"  listener="#{componentController.switchToSelectedProvidedInterface()}" update="CustomComponentCreateForm:inputdatalist CustomComponentCreateForm:providedInterfaceItemdatalist CustomComponentCreateForm:ComponentPanelGrid"/>
+                                    <p:ajax event="rowUnselect"  listener="#{componentController.switchToSelectedProvidedInterface()}" update="CustomComponentCreateForm:inputdatalist CustomComponentCreateForm:providedInterfaceItemdatalist CustomComponentCreateForm:ComponentPanelGrid"/>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListComponentTitle_id}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListComponentTitle_domaine}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.domaine.name}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListComponentTitle_name}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.name}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListComponentTitle_componentPath}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.componentPath}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListComponentTitle_providedInterface}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.providedInterface.name}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </div>
+                        <div class="ui-grid-col-1"></div>
+                    </div> 
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+
+                        <div class="ui-grid-col-6"> 
+                            <p:panel header="ProvidedInterface List">
+                                <p:dataTable id="providedInterfaceItemdatalist" value="#{componentController.selectedProvidedInterface.providedInterfaceItems}" var="item"
+                                             selectionMode="single" selection="#{componentController.selectedProvidedInterfaceItem}"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             initMode="immediate"
+
+                                             >
+
+                                    <p:ajax event="rowSelect"  listener="#{componentController.loadIputsForProvidedInterfaceItem()}" update="CustomComponentCreateForm:inputdatalist CustomComponentCreateForm:ProvidedInterfaceItemPanelGrid"/>
+                                    <p:ajax event="rowUnselect" listener="#{componentController.loadIputsForProvidedInterfaceItem()}" update="CustomComponentCreateForm:inputdatalist CustomComponentCreateForm:ProvidedInterfaceItemPanelGrid"/>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListProvidedInterfaceItemTitle_id}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListProvidedInterfaceItemTitle_name}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListOutputTitle_name}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.output.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListOutputTitle_type}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.output.type}"/>
+                                    </p:column>
+                                </p:dataTable>   
+                            </p:panel>
+                        </div>
+
+                        <div class="ui-grid-col-4">
+                            <p:panel header="Input List">
+                                <p:dataTable id="inputdatalist" value="#{componentController.selectedProvidedInterfaceItem.inputs}" var="item"
+                                             selectionMode="single" selection="#{componentController.selectedInput}"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             initMode="immediate"
+                                             >
+
+                                    <p:ajax event="rowSelect"  update="CustomComponentCreateForm:inputPanelGrid"/>
+                                    <p:ajax event="rowUnselect" update="CustomComponentCreateForm:inputPanelGrid"/>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListInputTitle_id}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListInputTitle_name}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListInputTitle_type}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.type}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>    
+                        </div>
+                        <div class="ui-grid-col-1"></div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -6,28 +6,29 @@
 package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author ESDAIRI
  */
 @Entity
-public class AssociatedDomains implements Serializable {
+public class ContextElement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Domaine sourceDomaine;
-    @ManyToOne
-    private Domaine destinationDomaine;
-    private int type; // 1 for association of type: related domain, 2 for an association of type destination is a sub domain of source.
+    private Context context;
+    @OneToMany(mappedBy = "contextElement")
+    private List<SensibleParameter> sensibleParameters;
 
     public Long getId() {
         return id;
@@ -37,6 +38,23 @@ public class AssociatedDomains implements Serializable {
         this.id = id;
     }
 
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public List<SensibleParameter> getSensibleParameters() {
+        return sensibleParameters;
+    }
+
+    public void setSensibleParameters(List<SensibleParameter> sensibleParameters) {
+        this.sensibleParameters = sensibleParameters;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -44,39 +62,13 @@ public class AssociatedDomains implements Serializable {
         return hash;
     }
 
-    public Domaine getSourceDomaine() {
-        return sourceDomaine;
-    }
-
-    public void setSourceDomaine(Domaine sourceDomaine) {
-        this.sourceDomaine = sourceDomaine;
-    }
-
-    public Domaine getDestinationDomaine() {
-        return destinationDomaine;
-    }
-
-    public void setDestinationDomaine(Domaine destinationDomaine) {
-        this.destinationDomaine = destinationDomaine;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    
-    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AssociatedDomains)) {
+        if (!(object instanceof ContextElement)) {
             return false;
         }
-        AssociatedDomains other = (AssociatedDomains) object;
+        ContextElement other = (ContextElement) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -85,7 +77,7 @@ public class AssociatedDomains implements Serializable {
 
     @Override
     public String toString() {
-        return "com.webapp.baseframework.bean.AssociatedDomains[ id=" + id + " ]";
+        return "com.webapp.baseframework.bean.ContextElement[ id=" + id + " ]";
     }
-    
+
 }

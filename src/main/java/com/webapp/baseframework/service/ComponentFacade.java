@@ -6,18 +6,16 @@
 package com.webapp.baseframework.service;
 
 import com.webapp.baseframework.bean.Component;
-import com.webapp.baseframework.bean.ProvidedInterfaceItem;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Soufiane
+ * @author ESDAIRI
  */
 @Stateless
-public class ProvidedInterfaceItemFacade extends AbstractFacade<ProvidedInterfaceItem> {
+public class ComponentFacade extends AbstractFacade<Component> {
 
     @PersistenceContext(unitName = "com.webapp_BaseFramework_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -27,13 +25,8 @@ public class ProvidedInterfaceItemFacade extends AbstractFacade<ProvidedInterfac
         return em;
     }
 
-    public List<ProvidedInterfaceItem> findPitmByComponent(Component component) {
-        return em.createQuery("SELECT pitm FROM ProvidedInterfaceItem pitm WHERE pitm.providedInterface.component.id=" + component.getId()).getResultList();
-//        return c.getProvidedInterface().getProvidedInterfaceItems();
+    public ComponentFacade() {
+        super(Component.class);
     }
-
-    public ProvidedInterfaceItemFacade() {
-        super(ProvidedInterfaceItem.class);
-    }
-
+    
 }

@@ -17,7 +17,7 @@
             <h:form id="InputnOutputListForm">
                 <div class="col-lg-4" >
                     <p:panel header="Components List">
-                        <p:dataTable id="componentlist" value="#{componentController.items}" var="item"
+                        <p:dataTable id="componentlist" value="#{componentController.components}" var="item"
                                      selectionMode="single" selection="#{componentController.selected}"
                                      paginator="true"
                                      rowKey="#{item.id}"

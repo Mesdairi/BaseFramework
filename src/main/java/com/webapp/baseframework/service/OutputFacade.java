@@ -19,21 +19,26 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class OutputFacade extends AbstractFacade<Output> {
 
-    @PersistenceContext(unitName = "base_framework")
+    @PersistenceContext(unitName = "com.webapp_BaseFramework_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-     public Output findOutputByPitm(ProvidedInterfaceItem pitm){
-   // return  em.createQuery("SELECT o FROM Output o WHERE o.providedInterfaceItem.name="+pitm.getName()).getResultList();
- return pitm.getOutput();
+
+    public Output findOutputByPitm(ProvidedInterfaceItem pitm) {
+
+        String query = "SELECT p.output FROM ProvidedInterfaceItem p WHERE p.id=" + pitm.getId();
+        Output output = (Output) em.createQuery(query).getResultList().get(0);
+        if (output == null) {
+            output = new Output();
+        }
+        return output;
     }
 
     public OutputFacade() {
         super(Output.class);
     }
-    
+
 }

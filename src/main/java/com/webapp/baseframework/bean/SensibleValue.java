@@ -7,6 +7,8 @@ package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,17 +19,17 @@ import javax.persistence.ManyToOne;
  * @author ESDAIRI
  */
 @Entity
-public class AssociatedDomains implements Serializable {
+public class SensibleValue implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    @Enumerated(EnumType.STRING)
+    private SensibleValueType sensibleValueType;
     @ManyToOne
-    private Domaine sourceDomaine;
-    @ManyToOne
-    private Domaine destinationDomaine;
-    private int type; // 1 for association of type: related domain, 2 for an association of type destination is a sub domain of source.
+    private SensibleParameter sensibleParameter;
 
     public Long getId() {
         return id;
@@ -37,6 +39,31 @@ public class AssociatedDomains implements Serializable {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public SensibleValueType getSensibleValueType() {
+        return sensibleValueType;
+    }
+
+    public void setSensibleValueType(SensibleValueType sensibleValueType) {
+        this.sensibleValueType = sensibleValueType;
+    }
+
+    public SensibleParameter getSensibleParameter() {
+        return sensibleParameter;
+    }
+
+    public void setSensibleParameter(SensibleParameter sensibleParameter) {
+        this.sensibleParameter = sensibleParameter;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -44,39 +71,13 @@ public class AssociatedDomains implements Serializable {
         return hash;
     }
 
-    public Domaine getSourceDomaine() {
-        return sourceDomaine;
-    }
-
-    public void setSourceDomaine(Domaine sourceDomaine) {
-        this.sourceDomaine = sourceDomaine;
-    }
-
-    public Domaine getDestinationDomaine() {
-        return destinationDomaine;
-    }
-
-    public void setDestinationDomaine(Domaine destinationDomaine) {
-        this.destinationDomaine = destinationDomaine;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    
-    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AssociatedDomains)) {
+        if (!(object instanceof SensibleValue)) {
             return false;
         }
-        AssociatedDomains other = (AssociatedDomains) object;
+        SensibleValue other = (SensibleValue) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -85,7 +86,7 @@ public class AssociatedDomains implements Serializable {
 
     @Override
     public String toString() {
-        return "com.webapp.baseframework.bean.AssociatedDomains[ id=" + id + " ]";
+        return "com.webapp.baseframework.bean.SensibleValue[ id=" + id + " ]";
     }
     
 }

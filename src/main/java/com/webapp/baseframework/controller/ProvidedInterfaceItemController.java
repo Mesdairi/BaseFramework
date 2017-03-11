@@ -31,6 +31,15 @@ public class ProvidedInterfaceItemController implements Serializable {
 
     @EJB
     private com.webapp.baseframework.service.ProvidedInterfaceItemFacade ejbFacade;
+    @EJB
+    private InputFacade inputFacade;
+    @EJB
+    private OutputFacade outputFacade;
+    @EJB
+    private ProvidedInterfaceFacade providedInterfaceFacade;
+    @EJB
+    private ProvidedInterfaceItemFacade pitmFacade ;
+    
     private List<ProvidedInterfaceItem> items = null;
     private List<ProvidedInterfaceItem> foundPitms ;
     private ProvidedInterfaceItem selected;
@@ -97,12 +106,7 @@ public class ProvidedInterfaceItemController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-
-    InputFacade inputFacade = new InputFacade();
-    OutputFacade outputFacade = new OutputFacade();
-    ProvidedInterfaceFacade providedInterfaceFacade = new ProvidedInterfaceFacade();
-    ProvidedInterfaceItemFacade pitmFacade = new ProvidedInterfaceItemFacade();
-
+    
     public void findPitmByComponent() {
 //        selected.setProvidedInterface(providedInterfaceFacade.findProvidedInterfaceByComponent(selected));
         setFoundPitms(pitmFacade.findPitmByComponent(selectedComponent));

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AssociatedDomainsViewDlg" widgetVar="AssociatedDomainsViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAssociatedDomainsTitle}">
+            <h:form id="AssociatedDomainsViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{associatedDomainsController.selected != null}">
+                        <h:outputText value="#{bundle.ViewAssociatedDomainsLabel_id}"/>
+                        <h:outputText value="#{associatedDomainsController.selected.id}" title="#{bundle.ViewAssociatedDomainsTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewAssociatedDomainsLabel_sourceDomaine}"/>
+                        <h:outputText value="#{associatedDomainsController.selected.sourceDomaine}" title="#{bundle.ViewAssociatedDomainsTitle_sourceDomaine}"/>
+                        <h:outputText value="#{bundle.ViewAssociatedDomainsLabel_destinationDomaine}"/>
+                        <h:outputText value="#{associatedDomainsController.selected.destinationDomaine}" title="#{bundle.ViewAssociatedDomainsTitle_destinationDomaine}"/>
+                        <h:outputText value="#{bundle.ViewAssociatedDomainsLabel_type}"/>
+                        <h:outputText value="#{associatedDomainsController.selected.type}" title="#{bundle.ViewAssociatedDomainsTitle_type}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="AssociatedDomainsViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -5,19 +5,17 @@
  */
 package com.webapp.baseframework.service;
 
-import com.webapp.baseframework.bean.Input;
-import com.webapp.baseframework.bean.ProvidedInterfaceItem;
-import java.util.List;
+import com.webapp.baseframework.bean.AssociatedDomains;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Soufiane
+ * @author ESDAIRI
  */
 @Stateless
-public class InputFacade extends AbstractFacade<Input> {
+public class AssociatedDomainsFacade extends AbstractFacade<AssociatedDomains> {
 
     @PersistenceContext(unitName = "com.webapp_BaseFramework_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -27,13 +25,8 @@ public class InputFacade extends AbstractFacade<Input> {
         return em;
     }
 
-    public List<Input> findInputByPitm(ProvidedInterfaceItem pitm) {
-        String query = "SELECT i FROM Input i WHERE i.providedInterfaceItem.id="+pitm.getId();
-        return em.createQuery(query).getResultList();
+    public AssociatedDomainsFacade() {
+        super(AssociatedDomains.class);
     }
-
-    public InputFacade() {
-        super(Input.class);
-    }
-
+    
 }

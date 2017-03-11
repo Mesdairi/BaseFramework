@@ -25,7 +25,7 @@ public class SensibleValue implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String value;
     @Enumerated(EnumType.STRING)
     private SensibleValueType sensibleValueType;
     @ManyToOne
@@ -39,12 +39,12 @@ public class SensibleValue implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public SensibleValueType getSensibleValueType() {

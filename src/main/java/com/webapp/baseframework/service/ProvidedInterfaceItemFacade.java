@@ -6,6 +6,7 @@
 package com.webapp.baseframework.service;
 
 import com.webapp.baseframework.bean.Component;
+import com.webapp.baseframework.bean.ProvidedInterface;
 import com.webapp.baseframework.bean.ProvidedInterfaceItem;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -31,9 +32,17 @@ public class ProvidedInterfaceItemFacade extends AbstractFacade<ProvidedInterfac
         return em.createQuery("SELECT pitm FROM ProvidedInterfaceItem pitm WHERE pitm.providedInterface.component.id=" + component.getId()).getResultList();
 //        return c.getProvidedInterface().getProvidedInterfaceItems();
     }
-
+    
+    public List<ProvidedInterfaceItem> findProvidedInterfaceItemByProvidedInterface(ProvidedInterface providedInterface) {
+        return em.createQuery("SELECT pitm FROM ProvidedInterfaceItem pitm WHERE pitm.providedInterface.id=" + providedInterface.getId()).getResultList();
+    }
+    
     public ProvidedInterfaceItemFacade() {
         super(ProvidedInterfaceItem.class);
+    }
+
+    public Long generateId() {
+        return getMaxId("ProvidedInterfaceItem");
     }
 
 }

@@ -31,6 +31,11 @@ public class InputFacade extends AbstractFacade<Input> {
         String query = "SELECT i FROM Input i WHERE i.providedInterfaceItem.id="+pitm.getId();
         return em.createQuery(query).getResultList();
     }
+    
+    public List<Input> findInputByProvidedInterfaceItem(ProvidedInterfaceItem providedInterfaceItem) {
+        String query = "SELECT i FROM Input i WHERE i.providedInterfaceItem.id="+providedInterfaceItem.getId();
+        return em.createQuery(query).getResultList();
+    }
 
     public InputFacade() {
         super(Input.class);

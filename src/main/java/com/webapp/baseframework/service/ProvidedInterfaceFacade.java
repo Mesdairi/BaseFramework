@@ -27,12 +27,16 @@ public class ProvidedInterfaceFacade extends AbstractFacade<ProvidedInterface> {
     }
 
     public ProvidedInterface findProvidedInterfaceByComponent(Component component) {
-        return (ProvidedInterface) em.createQuery("SELECT p FROM ProvidedInterface p WHERE p.component.id=" + component.getId()).getResultList().get(0);
-//    return c.getProvidedInterface();
+        String query = "SELECT p FROM ProvidedInterface p WHERE p.component.id=" + component.getId();
+        return (ProvidedInterface) em.createQuery(query).getResultList().get(0);
     }
 
     public ProvidedInterfaceFacade() {
         super(ProvidedInterface.class);
+    }
+    
+     public Long generateId(){
+        return getMaxId("ProvidedInterface");
     }
 
 }

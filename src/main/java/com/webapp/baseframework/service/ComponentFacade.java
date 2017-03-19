@@ -29,4 +29,8 @@ public class ComponentFacade extends AbstractFacade<Component> {
         super(Component.class);
     }
     
+    public Long generateId(){
+        return getMaxId("Component");
+    }
+    
 }

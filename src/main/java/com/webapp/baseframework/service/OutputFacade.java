@@ -36,6 +36,11 @@ public class OutputFacade extends AbstractFacade<Output> {
         }
         return output;
     }
+    
+    public Output findOutputByProvidedInterfaceItem(ProvidedInterfaceItem providedInterfaceItem){
+        String query = "SELECT o FROM Output o WHERE o.providedInterfaceItem.id="+ providedInterfaceItem.getId();
+        return (Output) em.createQuery(query).getResultList().get(0);
+    }
 
     public OutputFacade() {
         super(Output.class);

@@ -6,6 +6,7 @@ import com.webapp.baseframework.bean.Input;
 import com.webapp.baseframework.bean.Output;
 import com.webapp.baseframework.bean.ProvidedInterface;
 import com.webapp.baseframework.bean.ProvidedInterfaceItem;
+import com.webapp.baseframework.controller.util.IdGenerationUtil;
 import com.webapp.baseframework.controller.util.JsfUtil;
 import com.webapp.baseframework.controller.util.JsfUtil.PersistAction;
 import com.webapp.baseframework.service.ComponentFacade;
@@ -18,6 +19,7 @@ import com.webapp.baseframework.service.ProvidedInterfaceItemFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,12 +51,28 @@ public class ComponentController implements Serializable {
 
     private List<Domaine> domaines = null;
     private List<Component> components = null;
+    private List<ProvidedInterface> providedInterfaces = null;
+    private List<ProvidedInterfaceItem> providedInterfaceItems = null;
+    private List<Output> outputs = null;
+    private List<Input> inputs = null;
+
+    private List<Component> newComponents = null;
+    private List<ProvidedInterface> newProvidedInterfaces = null;
+    private List<ProvidedInterfaceItem> newProvidedInterfaceItems = null;
+    private List<Output> newOutputs = null;
+    private List<Input> newInputs = null;
 
     private Component selectedComponent;
     private ProvidedInterface selectedProvidedInterface;
     private ProvidedInterfaceItem selectedProvidedInterfaceItem;
     private Output selectedOutput;
     private Input selectedInput;
+
+    private Component createdComponent;
+    private ProvidedInterface createdProvidedInterface;
+    private ProvidedInterfaceItem createdProvidedInterfaceItem;
+    private Output createdOutput;
+    private Input createdInput;
 
     public ComponentController() {
     }
@@ -192,10 +210,167 @@ public class ComponentController implements Serializable {
         this.domaines = domaines;
     }
 
+    public Component getCreatedComponent() {
+        if (createdComponent == null) {
+            createdComponent = new Component();
+        }
+        return createdComponent;
+    }
+
+    public void setCreatedComponent(Component createdComponent) {
+        this.createdComponent = createdComponent;
+    }
+
+    public ProvidedInterface getCreatedProvidedInterface() {
+        if (createdProvidedInterface == null) {
+            createdProvidedInterface = new ProvidedInterface();
+        }
+        return createdProvidedInterface;
+    }
+
+    public void setCreatedProvidedInterface(ProvidedInterface createdProvidedInterface) {
+        this.createdProvidedInterface = createdProvidedInterface;
+    }
+
+    public ProvidedInterfaceItem getCreatedProvidedInterfaceItem() {
+        if (createdProvidedInterfaceItem == null) {
+            createdProvidedInterfaceItem = new ProvidedInterfaceItem();
+            createdProvidedInterfaceItem.setOutput(getCreatedOutput());
+        }
+        return createdProvidedInterfaceItem;
+    }
+
+    public void setCreatedProvidedInterfaceItem(ProvidedInterfaceItem createdProvidedInterfaceItem) {
+        this.createdProvidedInterfaceItem = createdProvidedInterfaceItem;
+    }
+
+    public Output getCreatedOutput() {
+        if (createdOutput == null) {
+            createdOutput = new Output();
+        }
+        return createdOutput;
+    }
+
+    public void setCreatedOutput(Output createdOutput) {
+        this.createdOutput = createdOutput;
+    }
+
+    public Input getCreatedInput() {
+        if (createdInput == null) {
+            createdInput = new Input();
+        }
+        return createdInput;
+    }
+
+    public void setCreatedInput(Input createdInput) {
+        this.createdInput = createdInput;
+    }
+
+    public List<ProvidedInterface> getProvidedInterfaces() {
+        if (providedInterfaces == null) {
+            providedInterfaces = providedInterfaceFacade.findAll();
+        }
+        return providedInterfaces;
+    }
+
+    public void setProvidedInterfaces(List<ProvidedInterface> providedInterfaces) {
+        this.providedInterfaces = providedInterfaces;
+    }
+
+    public List<ProvidedInterfaceItem> getProvidedInterfaceItems() {
+        if (providedInterfaceItems == null) {
+            providedInterfaceItems = new ArrayList();
+        }
+        return providedInterfaceItems;
+    }
+
+    public void setProvidedInterfaceItems(List<ProvidedInterfaceItem> providedInterfaceItems) {
+        this.providedInterfaceItems = providedInterfaceItems;
+    }
+
+    public List<Output> getOutputs() {
+        if (outputs == null) {
+            outputs = new ArrayList();
+        }
+        return outputs;
+    }
+
+    public void setOutputs(List<Output> outputs) {
+        this.outputs = outputs;
+    }
+
+    public List<Input> getInputs() {
+        if (inputs == null) {
+            inputs = new ArrayList();
+        }
+        return inputs;
+    }
+
+    public void setInputs(List<Input> inputs) {
+        this.inputs = inputs;
+    }
+
+    public List<Component> getNewComponents() {
+        if (newComponents == null) {
+            newComponents = new ArrayList<>();
+        }
+        return newComponents;
+    }
+
+    public void setNewComponents(List<Component> newComponents) {
+        this.newComponents = newComponents;
+    }
+
+    public List<ProvidedInterface> getNewProvidedInterfaces() {
+        if (newProvidedInterfaces == null) {
+            newProvidedInterfaces = new ArrayList<>();
+        }
+        return newProvidedInterfaces;
+    }
+
+    public void setNewProvidedInterfaces(List<ProvidedInterface> newProvidedInterfaces) {
+        this.newProvidedInterfaces = newProvidedInterfaces;
+    }
+    
+    
+    
+    public List<ProvidedInterfaceItem> getNewProvidedInterfaceItems() {
+        if (newProvidedInterfaceItems == null) {
+            newProvidedInterfaceItems = new ArrayList();
+        }
+        return newProvidedInterfaceItems;
+    }
+
+    public void setNewProvidedInterfaceItems(List<ProvidedInterfaceItem> newProvidedInterfaceItems) {
+        this.newProvidedInterfaceItems = newProvidedInterfaceItems;
+    }
+
+    public List<Output> getNewOutputs() {
+        if (newOutputs == null) {
+            newOutputs = new ArrayList();
+        }
+        return newOutputs;
+    }
+
+    public void setNewOutputs(List<Output> newOutputs) {
+        this.newOutputs = newOutputs;
+    }
+
+    public List<Input> getNewInputs() {
+        if (newInputs == null) {
+            newInputs = new ArrayList();
+        }
+        return newInputs;
+    }
+
+    public void setNewInputs(List<Input> newInputs) {
+        this.newInputs = newInputs;
+    }
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ComponentCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            components = null;    // Invalidate list of components to trigger re-query.
+
         }
     }
 
@@ -260,95 +435,79 @@ public class ComponentController implements Serializable {
     }
 
     /**
-     * this method switchs the selected providedInterface 
+     * this method will make sure that after each refresh 
+     * all selected fields get initialiazed properly
+     */
+    public void initializeOnPageRefresh() {
+        selectedComponent = null;
+        selectedProvidedInterface = null;
+        selectedProvidedInterfaceItem = null;
+        selectedOutput = null;
+        selectedInput = null;
+    }
+
+    /**
+     * this method switchs the selected providedInterface
      */
     public void switchToSelectedProvidedInterface() {
         selectedProvidedInterface = selectedComponent.getProvidedInterface();
         loadOutputForProvidedInterfaceItem();
-        loadIputsForProvidedInterfaceItem();
+        displayProvidedInterfaceItems();
+        selectedProvidedInterfaceItem = providedInterfaceItems.get(0);
+        displayInputs();
     }
-    
+
+    /**
+     * adds a component to the list and the datatable
+     */
+    public void saveComponent() {
+        createdComponent.setId(IdGenerationUtil.generateCreateId("component"));
+        createdProvidedInterface.setId(createdComponent.getId());
+        createdProvidedInterface.setComponent(createdComponent);
+        createdComponent.setProvidedInterface(createdProvidedInterface);
+        components.add(createdComponent);
+        newComponents.add(createdComponent);
+        newProvidedInterfaces.add(createdProvidedInterface);
+        createdComponent = null;
+        createdProvidedInterface = null;
+    }
+
     /**
      * add a providedInterfaceItem to the selected providedInterface
      */
     public void addProvidedInterfaceItem() {
-        List<ProvidedInterfaceItem> providedInterfaceItems = selectedProvidedInterface.getProvidedInterfaceItems();
-        if (providedInterfaceItems == null) {
-            providedInterfaceItems = new ArrayList<>();
-        }
-        providedInterfaceItems.add(selectedProvidedInterfaceItem);
-        selectedProvidedInterface.setProvidedInterfaceItems(new ArrayList<ProvidedInterfaceItem>());
-        selectedProvidedInterface.setProvidedInterfaceItems(providedInterfaceItems);
     }
 
     /**
      * removes a providedInterfaceItem form the selected providedInterface
      */
     public void removeProvidedInterfaceItem() {
-        List<ProvidedInterfaceItem> providedInterfaceItems = selectedProvidedInterface.getProvidedInterfaceItems();
-        if (providedInterfaceItems == null) {
-            return;
-        }
-        providedInterfaceItems.remove(selectedProvidedInterfaceItem);
-        selectedProvidedInterface.setProvidedInterfaceItems(new ArrayList<ProvidedInterfaceItem>());
-        selectedProvidedInterface.setProvidedInterfaceItems(providedInterfaceItems);
+
     }
 
     /**
      * edits a providedInterfaceItem from the selected providedInterface
      */
     public void editProvidedInterfaceItem() {
-        List<ProvidedInterfaceItem> providedInterfaceItems = selectedProvidedInterface.getProvidedInterfaceItems();
-        if (providedInterfaceItems == null) {
-            return;
-        }
-        int index = selectedProvidedInterface.getProvidedInterfaceItems().indexOf(selectedProvidedInterfaceItem);
-        providedInterfaceItems.set(index, selectedProvidedInterfaceItem);
-        selectedProvidedInterface.setProvidedInterfaceItems(new ArrayList<ProvidedInterfaceItem>());
-        selectedProvidedInterface.setProvidedInterfaceItems(providedInterfaceItems);
+
     }
 
     /**
      * add an input for the selected providedInterfaceItem
      */
     public void addInput() {
-        List<Input> inputs = selectedProvidedInterfaceItem.getInputs();
-        if (inputs == null) {
-            inputs = new ArrayList<>();
-        }
-        inputs.add(selectedInput);
-        selectedProvidedInterfaceItem.setInputs(new ArrayList<Input>());
-        selectedProvidedInterfaceItem.setInputs(inputs);
     }
 
     /**
      * removes the selected input form the selected provideInterfaceItem
      */
     public void removeInput() {
-        List<Input> inputs = selectedProvidedInterfaceItem.getInputs();
-        if (inputs == null) {
-            return;
-        }
-        inputs.remove(selectedInput);
-        selectedProvidedInterfaceItem.setInputs(new ArrayList<Input>());
-        selectedProvidedInterfaceItem.setInputs(inputs);
     }
 
     /**
      * edits the selected input form the selected provideInterfaceItem
      */
     public void editInput() {
-        List<Input> inputs = selectedProvidedInterfaceItem.getInputs();
-        if (inputs == null) {
-            return;
-        }
-        int index = inputs.indexOf(selectedInput);
-        if (index < 0) {
-            return;
-        }
-        inputs.set(index, selectedInput);
-        selectedProvidedInterfaceItem.setInputs(new ArrayList<Input>());
-        selectedProvidedInterfaceItem.setInputs(inputs);
     }
 
     /**
@@ -356,8 +515,10 @@ public class ComponentController implements Serializable {
      */
     public void loadProvidedInterfaceForComponent() {
         for (int i = 0; i < components.size(); i++) {
-            if (components.get(i).getProvidedInterface() == null) {
-                components.get(i).setProvidedInterface(providedInterfaceFacade.findProvidedInterfaceByComponent(components.get(i)));
+            for (int j = 0; j < getProvidedInterfaces().size(); j++) {
+                if (components.get(i).getId().equals(providedInterfaces.get(j).getComponent().getId())) {
+                    components.get(i).setProvidedInterface(providedInterfaces.get(j));
+                }
             }
         }
     }
@@ -367,22 +528,24 @@ public class ComponentController implements Serializable {
      */
     public void loadOutputForProvidedInterfaceItem() {
 
-        for (int i = 0; i < selectedProvidedInterface.getProvidedInterfaceItems().size(); i++) {
-            if (selectedProvidedInterface.getProvidedInterfaceItems().get(i).getOutput() == null) {
-                selectedProvidedInterface.getProvidedInterfaceItems().get(i).setOutput(outputFacade.findOutputByPitm(selectedProvidedInterface.getProvidedInterfaceItems().get(i)));
-            }
+        for (int i = 0; i < providedInterfaceItems.size(); i++) {
+            providedInterfaceItems.get(i).setOutput(outputFacade.findOutputByProvidedInterfaceItem(providedInterfaceItems.get(i)));
+
         }
     }
-    
+
+    /**
+     *
+     */
+    public void displayProvidedInterfaceItems() {
+        providedInterfaceItems = providedInterfaceItemFacade.findProvidedInterfaceItemByProvidedInterface(selectedProvidedInterface);
+    }
+
     /**
      * loads the inpus for each providedInterfaceItem
      */
-    public void loadIputsForProvidedInterfaceItem(){
-          for (int i = 0; i < selectedProvidedInterface.getProvidedInterfaceItems().size(); i++) {
-            if (selectedProvidedInterface.getProvidedInterfaceItems().get(i).getInputs() == null) {
-                selectedProvidedInterface.getProvidedInterfaceItems().get(i).setInputs(inputFacade.findInputByPitm(selectedProvidedInterfaceItem));
-            }
-        }
+    public void displayInputs() {
+        inputs = inputFacade.findInputByProvidedInterfaceItem(selectedProvidedInterfaceItem);
     }
 
     @FacesConverter(forClass = Component.class)

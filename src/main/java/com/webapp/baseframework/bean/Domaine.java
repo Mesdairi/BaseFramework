@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -20,7 +21,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Domaine implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +30,12 @@ public class Domaine implements Serializable {
     @OneToMany(mappedBy = "domaine")
     private List<Component> components;
     @OneToMany(mappedBy = "sourceDomaine")
-    private List<AssociatedDomains> sourceDomains; 
+    private List<AssociatedDomains> sourceDomains;
     @OneToMany(mappedBy = "destinationDomaine")
     private List<AssociatedDomains> destinationDomains;
-   
+    @OneToOne(mappedBy = "domaine")
+    private Goal goal;
+
     public String getName() {
         return name;
     }
@@ -80,6 +83,14 @@ public class Domaine implements Serializable {
 
     public void setDestinationDomains(List<AssociatedDomains> destinationDomains) {
         this.destinationDomains = destinationDomains;
+    }
+
+    public Goal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 
     

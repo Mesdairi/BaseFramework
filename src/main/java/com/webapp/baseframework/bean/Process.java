@@ -6,54 +6,30 @@
 package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 
 /**
  *
  * @author ESDAIRI
  */
 @Entity
-public class ProvidedInterfaceItem implements Serializable {
+public class Process implements Serializable {
 
-    @OneToOne(mappedBy = "providedInterfaceItem")
-    private Step step;
-
+    
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    @OneToOne
-    private Output output;
-    @OneToMany(mappedBy = "providedInterfaceItem")
-    private List<Input> inputs;
     @ManyToOne
-    private ProvidedInterface providedInterface;
-    
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ProvidedInterface getProvidedInterface() {
-        return providedInterface;
-    }
-
-    public void setProvidedInterface(ProvidedInterface providedInterface) {
-        this.providedInterface = providedInterface;
-    }
+    private Action action;
+    @OneToOne(mappedBy = "process")
+    private Step step;
 
     public Long getId() {
         return id;
@@ -63,20 +39,20 @@ public class ProvidedInterfaceItem implements Serializable {
         this.id = id;
     }
 
-    public Output getOutput() {
-        return output;
+    public Action getAction() {
+        return action;
     }
 
-    public void setOutput(Output output) {
-        this.output = output;
+    public void setAction(Action action) {
+        this.action = action;
     }
 
-    public List<Input> getInputs() {
-        return inputs;
+    public Step getStep() {
+        return step;
     }
 
-    public void setInputs(List<Input> inputs) {
-        this.inputs = inputs;
+    public void setStep(Step step) {
+        this.step = step;
     }
     
 
@@ -90,10 +66,10 @@ public class ProvidedInterfaceItem implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProvidedInterfaceItem)) {
+        if (!(object instanceof Process)) {
             return false;
         }
-        ProvidedInterfaceItem other = (ProvidedInterfaceItem) object;
+        Process other = (Process) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +78,7 @@ public class ProvidedInterfaceItem implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return "com.webapp.baseframework.bean.Process[ id=" + id + " ]";
     }
-
+    
 }

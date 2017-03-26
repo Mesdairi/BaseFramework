@@ -6,54 +6,32 @@
 package com.webapp.baseframework.bean;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 
 /**
  *
  * @author ESDAIRI
  */
 @Entity
-public class ProvidedInterfaceItem implements Serializable {
-
-    @OneToOne(mappedBy = "providedInterfaceItem")
-    private Step step;
-
+public class ResultItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     @OneToOne
-    private Output output;
-    @OneToMany(mappedBy = "providedInterfaceItem")
-    private List<Input> inputs;
+    private Attribute attribute;
+    @Enumerated(EnumType.STRING)
+    private ResultType type;
     @ManyToOne
-    private ProvidedInterface providedInterface;
-    
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ProvidedInterface getProvidedInterface() {
-        return providedInterface;
-    }
-
-    public void setProvidedInterface(ProvidedInterface providedInterface) {
-        this.providedInterface = providedInterface;
-    }
+    private Result result;
 
     public Long getId() {
         return id;
@@ -62,24 +40,33 @@ public class ProvidedInterfaceItem implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Output getOutput() {
-        return output;
-    }
-
-    public void setOutput(Output output) {
-        this.output = output;
-    }
-
-    public List<Input> getInputs() {
-        return inputs;
-    }
-
-    public void setInputs(List<Input> inputs) {
-        this.inputs = inputs;
-    }
     
+    public ResultType getType() {
+        return type;
+    }
 
+    public void setType(ResultType type) {
+        this.type = type;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(Attribute attribute) {
+        this.attribute = attribute;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -90,10 +77,10 @@ public class ProvidedInterfaceItem implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProvidedInterfaceItem)) {
+        if (!(object instanceof ResultItem)) {
             return false;
         }
-        ProvidedInterfaceItem other = (ProvidedInterfaceItem) object;
+        ResultItem other = (ResultItem) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +89,9 @@ public class ProvidedInterfaceItem implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return "ResultItem{" + "type=" + type + ", result=" + result + '}';
     }
+
+    
 
 }

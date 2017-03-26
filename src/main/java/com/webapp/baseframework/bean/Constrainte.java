@@ -11,49 +11,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 
 /**
  *
  * @author ESDAIRI
  */
 @Entity
-public class ProvidedInterfaceItem implements Serializable {
-
-    @OneToOne(mappedBy = "providedInterfaceItem")
-    private Step step;
-
+public class Constrainte implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @OneToMany(mappedBy = "constrainte")
+    private List<ConstraintItem> constraintItems;
     @OneToOne
-    private Output output;
-    @OneToMany(mappedBy = "providedInterfaceItem")
-    private List<Input> inputs;
-    @ManyToOne
-    private ProvidedInterface providedInterface;
-    
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ProvidedInterface getProvidedInterface() {
-        return providedInterface;
-    }
-
-    public void setProvidedInterface(ProvidedInterface providedInterface) {
-        this.providedInterface = providedInterface;
-    }
+    private Goal goal;
+   
 
     public Long getId() {
         return id;
@@ -63,22 +39,23 @@ public class ProvidedInterfaceItem implements Serializable {
         this.id = id;
     }
 
-    public Output getOutput() {
-        return output;
-    }
-
-    public void setOutput(Output output) {
-        this.output = output;
-    }
-
-    public List<Input> getInputs() {
-        return inputs;
-    }
-
-    public void setInputs(List<Input> inputs) {
-        this.inputs = inputs;
-    }
     
+    
+    public List<ConstraintItem> getConstraintItems() {
+        return constraintItems;
+    }
+
+    public void setConstraintItems(List<ConstraintItem> constraintItems) {
+        this.constraintItems = constraintItems;
+    }
+
+    public Goal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
 
     @Override
     public int hashCode() {
@@ -90,10 +67,10 @@ public class ProvidedInterfaceItem implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProvidedInterfaceItem)) {
+        if (!(object instanceof Constrainte)) {
             return false;
         }
-        ProvidedInterfaceItem other = (ProvidedInterfaceItem) object;
+        Constrainte other = (Constrainte) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +79,8 @@ public class ProvidedInterfaceItem implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return "Constrainte{" + "goal=" + goal + '}';
     }
 
+    
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AssociatedDomainsCreateDlg" widgetVar="AssociatedDomainsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAssociatedDomainsTitle}" >
+            <h:form id="AssociatedDomainsCreate">
+                            <h:panelGroup id="display">
+                                <p:panelGrid columns="3" >
+                                    <p:outputLabel value="Source Domain :" for="sourceDomaine" />
+                                    <p:selectOneMenu id="sourceDomaine" value="#{associatedDomainsController.selectedDomaine}" >
+                                        <f:selectItems value="#{associatedDomainsController.domains}"
+                                                       />
+                                        <p:ajax  listener="#{associatedDomainsController.domaineSelected()}" update=":AssociatedDomainsCreate:relatedDomaine :AssociatedDomainsCreate:subDomaine" />
+                                    </p:selectOneMenu>   <p:column> </p:column>
+                                    <p:outputLabel value="Related Domain :" for="sourceDomaine" />
+                                    <p:selectOneMenu id="relatedDomaine" value="#{associatedDomainsController.selectedRelatedDomaine}" >
+                                        <f:selectItems value="#{associatedDomainsController.relatedDomainItems}"/>
+                                        <p:ajax />
+                                    </p:selectOneMenu>   
+                                    <p:commandButton  actionListener="#{associatedDomainsController.prepareCreateRelatedDomain()}" update=":AssociatedDomainsCreate:relatedDomaine :AssociatedDomainsCreate:subDomaine" icon="ui-icon-plus" />
+                                    <p:outputLabel value="Sub-Domaine :" for="sourceDomaine" />
+                                    <p:selectOneMenu id="subDomaine" value="#{associatedDomainsController.selectedSubDomaine}" >
+                                        <f:selectItems value="#{associatedDomainsController.subDomainItems}"
+                                                       />
+                                        <p:ajax  />
+                                    </p:selectOneMenu>   
+                                    <p:commandButton  actionListener="#{associatedDomainsController.prepareCreateSubDomain()}" update=":AssociatedDomainsCreate:subDomaine :AssociatedDomainsCreate:relatedDomaine" icon="ui-icon-plus" />
+                                </p:panelGrid>
+                            </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{associatedDomainsController.commitAssociatedDomainsList()}" update=" :AssociatedDomainsCreateForm :AssociatedDomainsCreate:relatedDomaine :AssociatedDomainsCreate:subDomaine" onclick="AssociatedDomainsCreate.hide()" style="position: relative ; left : 80%;"/>
+                 </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

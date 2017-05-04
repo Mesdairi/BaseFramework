@@ -17,65 +17,15 @@
         </ui:define>
         <ui:define name="body">
 
-            <h:form id="CustomComponentCreateForm">
+            <h:form id="DisplayComponentForm">
                 <div class="ui-grid">
-                    <p:panel id="CustomComponentCreateFormPanel" header="#{bundle.CreateComponentTitle}" style="margin-bottom:20px" >
-                        <div class="ui-grid-row">
-                            <!--<div class="ui-grid-col-1"></div>-->
-                            <div class="ui-grid-col-4">  
-                                <p:panel > 
-                                    <h:panelGrid columns="2" id="ComponentPanelGrid" cellpadding="5" >   
-                                        <p:outputLabel value="#{bundle.CreateComponentLabel_domaine}" for="domaine" />
-                                        <p:selectOneMenu id="domaine" value="#{componentController.createdComponent.domaine}" >
-                                            <f:selectItems value="#{componentController.domaines}"
-                                                           var="domaineItem"
-                                                           itemValue="#{domaineItem}"/>
-                                        </p:selectOneMenu>
-                                        <p:outputLabel value="#{bundle.CreateComponentLabel_name}" for="name" />
-                                        <p:inputText id="name" value="#{componentController.createdComponent.name}" title="#{bundle.CreateComponentTitle_name}" />
-                                        <p:outputLabel value="#{bundle.CreateComponentLabel_componentPath}" for="componentPath" />
-                                        <p:inputText id="componentPath" value="#{componentController.createdComponent.componentPath}" title="#{bundle.CreateComponentTitle_componentPath}" />
-                                        <p:outputLabel value="#{bundle.CreateProvidedInterfaceLabel_name}" for="providedInterface" />
-                                        <p:inputText id="providedInterface" value="#{componentController.createdProvidedInterface.name}" title="#{bundle.ProvidedInterfaceTitle_name}" />
-                                        <p:commandButton value="#{bundle.Add}" actionListener="#{componentController.saveComponent()}" update="CustomComponentCreateForm:ComponentPanelGrid CustomComponentCreateForm:datalist CustomComponentCreateForm:providedInterfaceItemdatalist CustomComponentCreateForm:inputdatalist"/>
-                                    </h:panelGrid>
-                                </p:panel>    
-                            </div>
-                            <div class="ui-grid-col-4">   
-                                <p:panel> 
-                                    <h:panelGrid columns="2" id="ProvidedInterfaceItemPanelGrid" cellpadding="5">
-                                        <p:outputLabel value="#{bundle.CreateProvidedInterfaceItemLabel_name}" for="providedInterfaceItem" />
-                                        <p:inputText id="providedInterfaceItem" value="#{componentController.createdProvidedInterfaceItem.name}" title="#{bundle.CreateProvidedInterfaceItemTitle_name}" />
-                                        <p:outputLabel value="#{bundle.CreateOutputLabel_name}" for="outputName" />
-                                        <p:inputText id="outputName" value="#{componentController.createdProvidedInterfaceItem.output.name}" title="#{bundle.CreateOutputTitle_name}" />
-                                        <p:outputLabel value="#{bundle.CreateOutputLabel_type}" for="outputType" />
-                                        <p:inputText id="outputType" value="#{componentController.createdProvidedInterfaceItem.output.type}" title="#{bundle.CreateOutputTitle_type}" />
-                                        <p:commandButton value="#{bundle.Add}" actionListener="#{componentController.addProvidedInterfaceItem()}" />
-                                    </h:panelGrid>
-                                </p:panel> 
-                            </div>
-                            <div class="ui-grid-col-4"> 
-                                <p:panel> 
-                                    <h:panelGrid columns="2" id="inputPanelGrid" cellpadding="5">
-                                        <p:outputLabel value="#{bundle.CreateInputLabel_name}" for="inputName" />
-                                        <p:inputText id="inputName" value="#{componentController.createdInput.name}" title="#{bundle.CreateOutputTitle_name}" />
-                                        <p:outputLabel value="#{bundle.CreateInputLabel_type}" for="inputType" />
-                                        <p:inputText id="inputType" value="#{componentController.createdInput.type}" title="#{bundle.CreateOutputTitle_type}" />
-                                        <p:commandButton value="#{bundle.Add}" actionListener="#{componentController.addInput()}" />
-                                    </h:panelGrid>
-                                </p:panel> 
-                            </div>
-                            <!--<div class="ui-grid-col-1"></div>-->
-                        </div>
-                        <div class="ui-grid-row">
-                            <p:commandButton value="#{bundle.Save}" actionListener="#{componentController.create()}" />
-
-                        </div>
-                    </p:panel>
                     <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-1">
+                           
+                        </div> 
                         <div class="ui-grid-col-10">
-                            <p:panel header="Comonent List">
+                            <p:panel header="Comonent List">                        
+
                                 <p:dataTable id="datalist" value="#{componentController.components}" var="item"
                                              selectionMode="single" selection="#{componentController.selectedComponent}"
                                              paginator="true"
@@ -85,8 +35,8 @@
                                              initMode="immediate"
                                              >
 
-                                    <p:ajax event="rowSelect"  listener="#{componentController.switchToSelectedProvidedInterface()}" update="CustomComponentCreateForm:inputdatalist CustomComponentCreateForm:providedInterfaceItemdatalist"/>
-                                    <p:ajax event="rowUnselect"  listener="#{componentController.switchToSelectedProvidedInterface()}" update="CustomComponentCreateForm:inputdatalist CustomComponentCreateForm:providedInterfaceItemdatalist"/>
+                                    <p:ajax event="rowSelect"  listener="#{componentController.switchToSelectedProvidedInterface()}" update="DisplayComponentForm:inputdatalist DisplayComponentForm:providedInterfaceItemdatalist"/>
+                                    <p:ajax event="rowUnselect"  listener="#{componentController.switchToSelectedProvidedInterface()}" update="DisplayComponentForm:inputdatalist DisplayComponentForm:providedInterfaceItemdatalist"/>
 
                                     <p:column>
                                         <f:facet name="header">
@@ -125,12 +75,13 @@
                                 </p:dataTable>
                             </p:panel>
                         </div>
-                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-1">
+
+                        </div> 
                     </div> 
 
                     <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-
+                        <div class="ui-grid-col-1"></div> 
                         <div class="ui-grid-col-6"> 
                             <p:panel header="ProvidedInterface List">
                                 <p:dataTable id="providedInterfaceItemdatalist" value="#{componentController.providedInterfaceItems}" var="item"
@@ -142,8 +93,8 @@
                                              initMode="immediate"
                                              >
 
-                                    <p:ajax event="rowSelect"  listener="#{componentController.displayInputs()}" update="CustomComponentCreateForm:inputdatalist"/>
-                                    <p:ajax event="rowUnselect" listener="#{componentController.displayInputs()}" update="CustomComponentCreateForm:inputdatalist"/>
+                                    <p:ajax event="rowSelect"  listener="#{componentController.displayInputs()}" update="DisplayComponentForm:inputdatalist"/>
+                                    <p:ajax event="rowUnselect" listener="#{componentController.displayInputs()}" update="DisplayComponentForm:inputdatalist"/>
                                     <p:column>
                                         <f:facet name="header">
                                             <h:outputText value="#{bundle.ListProvidedInterfaceItemTitle_id}"/>
@@ -171,7 +122,6 @@
                                 </p:dataTable>   
                             </p:panel>
                         </div>
-
                         <div class="ui-grid-col-4">
                             <p:panel header="Input List">
                                 <p:dataTable id="inputdatalist" value="#{componentController.inputs}" var="item"
@@ -206,7 +156,7 @@
                                 </p:dataTable>
                             </p:panel>    
                         </div>
-                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-1"></div> 
                     </div>
                 </div>
             </h:form>

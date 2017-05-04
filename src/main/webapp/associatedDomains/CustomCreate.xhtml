@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Create New Associations"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:form id="AssociatedDomainsCreateForm">
+                <div class="ui-grid-responsive">
+                    <div class="ui-grid-row">
+                        <p:panel header="Domain  --->  (sub/related)Domain">
+                            <div class="ui-grid-col-4" >
+                                <p:panel header="Domains">
+                                    <p:dataTable id="domainelist" value="#{associatedDomainsController.domains}" var="item"
+                                                 selectionMode="single" selection="#{associatedDomainsController.selectedDomaine}"
+                                                 rowKey="#{item.id}"
+                                                 rows="10"
+                                                 rowsPerPageTemplate="10,20,30,40,50"
+                                                 >
+                                        <p:ajax event="rowSelect" listener="#{associatedDomainsController.findRelatednSubDomains()}"  update=":AssociatedDomainsCreateForm:relateddomainelist :AssociatedDomainsCreateForm:subdomainelist"/>
+                                        <p:ajax event="rowUnselect" update=":AssociatedDomainsCreateForm:relateddomainelist :AssociatedDomainsCreateForm:subdomainelist"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.id}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Name"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.name}"/>
+                                        </p:column>
+                                        <f:facet name="footer">
+                                        </f:facet>
+                                    </p:dataTable>
+                                </p:panel>
+                            </div>
+                            <div class="ui-grid-col-4" >
+                                <p:panel header="RelatedDomains">
+                                    <p:dataTable id="relateddomainelist" value="#{associatedDomainsController.relatedDomains}" var="item"
+                                                 rowKey="#{item.id}"
+                                                 rows="10"
+                                                 rowsPerPageTemplate="10,20,30,40,50"
+                                                 >
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.id}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Name"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.name}"/>
+                                        </p:column>
+                                        <f:facet name="footer">
+                                        </f:facet>
+                                    </p:dataTable>
+                                </p:panel>
+                            </div>
+                            <div class="ui-grid-col-4" >
+                                <p:panel header="SubDomains">
+                                    <p:dataTable id="subdomainelist" value="#{associatedDomainsController.subDomains}" var="item"
+                                                 rowKey="#{item.id}"
+                                                 rows="10"
+                                                 rowsPerPageTemplate="10,20,30,40,50"
+                                                 >
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.id}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Name"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.name}"/>
+                                        </p:column>
+                                        <f:facet name="footer">
+                                        </f:facet>
+                                    </p:dataTable>
+                                </p:panel>
+                            </div>
+                        </p:panel>
+                    </div>
+                    <div class="ui-grid-row"><p:commandButton  id="createButton" icon="ui-icon-plus" actionListener="#{associatedDomainsController.domaineSelected()}"  update=":AssociatedDomainsCreate"  value="#{bundle.Create}"  oncomplete="PF('AssociatedDomainsCreateDialog').show()" style=" position: relative ; left : 80% ; " />  </div>
+                </div>
+            </h:form>
+            <ui:include src="newCreate.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>
+ 

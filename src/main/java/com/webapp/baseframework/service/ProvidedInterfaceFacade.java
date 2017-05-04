@@ -34,9 +34,17 @@ public class ProvidedInterfaceFacade extends AbstractFacade<ProvidedInterface> {
     public ProvidedInterfaceFacade() {
         super(ProvidedInterface.class);
     }
-    
-     public Long generateId(){
-        return getMaxId("ProvidedInterface");
+
+    private void clone(ProvidedInterface providedInterface, ProvidedInterface cloned) {
+        cloned.setId(providedInterface.getId());
+        cloned.setName(providedInterface.getName());
+        cloned.setComponent(providedInterface.getComponent());
+    }
+
+    public ProvidedInterface clone(ProvidedInterface providedInterface) {
+        ProvidedInterface cloned = new ProvidedInterface();
+        clone(providedInterface, cloned);
+        return cloned;
     }
 
 }

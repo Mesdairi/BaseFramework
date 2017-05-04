@@ -29,8 +29,19 @@ public class ComponentFacade extends AbstractFacade<Component> {
         super(Component.class);
     }
     
-    public Long generateId(){
-        return getMaxId("Component");
+    private void clone(Component component, Component cloned){
+        cloned.setId(component.getId());
+        cloned.setName(component.getName());
+        cloned.setComponentPath(component.getComponentPath());
+        cloned.setDomaine(cloned.getDomaine());
+        cloned.setProvidedInterface(component.getProvidedInterface());
+    }
+    
+    public Component clone(Component component){
+        Component cloned = new Component();
+        clone(component, cloned);
+        
+        return cloned;
     }
     
 }

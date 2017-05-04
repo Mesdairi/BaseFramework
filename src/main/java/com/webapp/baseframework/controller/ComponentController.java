@@ -6,7 +6,6 @@ import com.webapp.baseframework.bean.Input;
 import com.webapp.baseframework.bean.Output;
 import com.webapp.baseframework.bean.ProvidedInterface;
 import com.webapp.baseframework.bean.ProvidedInterfaceItem;
-import com.webapp.baseframework.controller.util.IdGenerationUtil;
 import com.webapp.baseframework.controller.util.JsfUtil;
 import com.webapp.baseframework.controller.util.JsfUtil.PersistAction;
 import com.webapp.baseframework.service.ComponentFacade;
@@ -19,7 +18,6 @@ import com.webapp.baseframework.service.ProvidedInterfaceItemFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,23 +54,15 @@ public class ComponentController implements Serializable {
     private List<Output> outputs = null;
     private List<Input> inputs = null;
 
-    private List<Component> newComponents = null;
-    private List<ProvidedInterface> newProvidedInterfaces = null;
-    private List<ProvidedInterfaceItem> newProvidedInterfaceItems = null;
-    private List<Output> newOutputs = null;
-    private List<Input> newInputs = null;
-
     private Component selectedComponent;
     private ProvidedInterface selectedProvidedInterface;
     private ProvidedInterfaceItem selectedProvidedInterfaceItem;
     private Output selectedOutput;
     private Input selectedInput;
 
-    private Component createdComponent;
-    private ProvidedInterface createdProvidedInterface;
-    private ProvidedInterfaceItem createdProvidedInterfaceItem;
-    private Output createdOutput;
-    private Input createdInput;
+    
+    private boolean componentSaved = false;
+    private boolean providedInterfaceItemSaved = false;
 
     public ComponentController() {
     }
@@ -100,6 +90,10 @@ public class ComponentController implements Serializable {
 
     public Component prepareCreate() {
         selectedComponent = new Component();
+        selectedProvidedInterface = new ProvidedInterface();
+        selectedProvidedInterfaceItem = new ProvidedInterfaceItem();
+        selectedOutput = new Output();
+        selectedInput = new Input();
         initializeEmbeddableKey();
         return selectedComponent;
     }
@@ -210,62 +204,6 @@ public class ComponentController implements Serializable {
         this.domaines = domaines;
     }
 
-    public Component getCreatedComponent() {
-        if (createdComponent == null) {
-            createdComponent = new Component();
-        }
-        return createdComponent;
-    }
-
-    public void setCreatedComponent(Component createdComponent) {
-        this.createdComponent = createdComponent;
-    }
-
-    public ProvidedInterface getCreatedProvidedInterface() {
-        if (createdProvidedInterface == null) {
-            createdProvidedInterface = new ProvidedInterface();
-        }
-        return createdProvidedInterface;
-    }
-
-    public void setCreatedProvidedInterface(ProvidedInterface createdProvidedInterface) {
-        this.createdProvidedInterface = createdProvidedInterface;
-    }
-
-    public ProvidedInterfaceItem getCreatedProvidedInterfaceItem() {
-        if (createdProvidedInterfaceItem == null) {
-            createdProvidedInterfaceItem = new ProvidedInterfaceItem();
-            createdProvidedInterfaceItem.setOutput(getCreatedOutput());
-        }
-        return createdProvidedInterfaceItem;
-    }
-
-    public void setCreatedProvidedInterfaceItem(ProvidedInterfaceItem createdProvidedInterfaceItem) {
-        this.createdProvidedInterfaceItem = createdProvidedInterfaceItem;
-    }
-
-    public Output getCreatedOutput() {
-        if (createdOutput == null) {
-            createdOutput = new Output();
-        }
-        return createdOutput;
-    }
-
-    public void setCreatedOutput(Output createdOutput) {
-        this.createdOutput = createdOutput;
-    }
-
-    public Input getCreatedInput() {
-        if (createdInput == null) {
-            createdInput = new Input();
-        }
-        return createdInput;
-    }
-
-    public void setCreatedInput(Input createdInput) {
-        this.createdInput = createdInput;
-    }
-
     public List<ProvidedInterface> getProvidedInterfaces() {
         if (providedInterfaces == null) {
             providedInterfaces = providedInterfaceFacade.findAll();
@@ -308,63 +246,6 @@ public class ComponentController implements Serializable {
 
     public void setInputs(List<Input> inputs) {
         this.inputs = inputs;
-    }
-
-    public List<Component> getNewComponents() {
-        if (newComponents == null) {
-            newComponents = new ArrayList<>();
-        }
-        return newComponents;
-    }
-
-    public void setNewComponents(List<Component> newComponents) {
-        this.newComponents = newComponents;
-    }
-
-    public List<ProvidedInterface> getNewProvidedInterfaces() {
-        if (newProvidedInterfaces == null) {
-            newProvidedInterfaces = new ArrayList<>();
-        }
-        return newProvidedInterfaces;
-    }
-
-    public void setNewProvidedInterfaces(List<ProvidedInterface> newProvidedInterfaces) {
-        this.newProvidedInterfaces = newProvidedInterfaces;
-    }
-    
-    
-    
-    public List<ProvidedInterfaceItem> getNewProvidedInterfaceItems() {
-        if (newProvidedInterfaceItems == null) {
-            newProvidedInterfaceItems = new ArrayList();
-        }
-        return newProvidedInterfaceItems;
-    }
-
-    public void setNewProvidedInterfaceItems(List<ProvidedInterfaceItem> newProvidedInterfaceItems) {
-        this.newProvidedInterfaceItems = newProvidedInterfaceItems;
-    }
-
-    public List<Output> getNewOutputs() {
-        if (newOutputs == null) {
-            newOutputs = new ArrayList();
-        }
-        return newOutputs;
-    }
-
-    public void setNewOutputs(List<Output> newOutputs) {
-        this.newOutputs = newOutputs;
-    }
-
-    public List<Input> getNewInputs() {
-        if (newInputs == null) {
-            newInputs = new ArrayList();
-        }
-        return newInputs;
-    }
-
-    public void setNewInputs(List<Input> newInputs) {
-        this.newInputs = newInputs;
     }
 
     public void create() {
@@ -435,8 +316,8 @@ public class ComponentController implements Serializable {
     }
 
     /**
-     * this method will make sure that after each refresh 
-     * all selected fields get initialiazed properly
+     * this method will make sure that after each refresh all selected fields
+     * get initialiazed properly
      */
     public void initializeOnPageRefresh() {
         selectedComponent = null;
@@ -460,60 +341,93 @@ public class ComponentController implements Serializable {
     /**
      * adds a component to the list and the datatable
      */
-    public void saveComponent() {
-        createdComponent.setId(IdGenerationUtil.generateCreateId("component"));
-        createdProvidedInterface.setId(createdComponent.getId());
-        createdProvidedInterface.setComponent(createdComponent);
-        createdComponent.setProvidedInterface(createdProvidedInterface);
-        components.add(createdComponent);
-        newComponents.add(createdComponent);
-        newProvidedInterfaces.add(createdProvidedInterface);
-        createdComponent = null;
-        createdProvidedInterface = null;
+    public void addComponent() {
+        JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ComponentSaved"));
+        componentSaved = true;
+    }
+
+    public String isComponentNotSaved(){
+        return componentSaved ? "false" : "true";
+    }
+    
+    /**
+     * this method takes care of wether or not the fields to add
+     * providedInterface will be available for the user or not that depends on
+     * the action of saving the component has been performed
+     *
+     * @return a boolean whether or not the component has been saved
+     */
+    public String isComponentSaved() {
+        return componentSaved ? "true" : "false";
     }
 
     /**
      * add a providedInterfaceItem to the selected providedInterface
      */
     public void addProvidedInterfaceItem() {
+        if (!componentSaved) {
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ComponentNotSaved"));
+            return;
+        }
+        providedInterfaceItemSaved = true;
+        handleProvidedInterfaceItemIdAndOutputRelation();
+        providedInterfaceItems.add(providedInterfaceItemFacade.clone(selectedProvidedInterfaceItem));
+        outputs.add(outputFacade.clone(selectedOutput));
     }
+    
+    /**
+     * this method is used to handle some issues when creating a providedInterfaceItem
+     */
+    private void handleProvidedInterfaceItemIdAndOutputRelation(){
+        selectedProvidedInterfaceItem.setId(generateProvidedInterfaceId());
+        selectedProvidedInterfaceItem.setOutput(selectedOutput);
+        selectedOutput.setProvidedInterfaceItem(selectedProvidedInterfaceItem);
+    }
+    
+    /**
+     * this method generates ids for the providedInterfaceItems so we can
+     * have a way to assign those ids to inputs and be able to tell which 
+     * input is associated with which providedInterfaceItem
+     * @return 
+     */
+    private Long generateProvidedInterfaceId(){
+        if (providedInterfaceItems == null || providedInterfaceItems.size() == 0 || providedInterfaceItems.get(0)==null) {
+            return 1L;
+        } else {
+            return providedInterfaceItems.get(providedInterfaceItems.size()-1).getId()+1;
+        }
+    }
+    
+    
 
     /**
-     * removes a providedInterfaceItem form the selected providedInterface
+     * this method takes care of wether or not the fields to add
+     * inputs will be available for the user or not that depends on
+     * the action of saving the providedInterface has been performed
+     *
+     * @return a boolean whether or not the providedInterface has been saved
      */
-    public void removeProvidedInterfaceItem() {
-
-    }
-
-    /**
-     * edits a providedInterfaceItem from the selected providedInterface
-     */
-    public void editProvidedInterfaceItem() {
-
+    public String isProvidedInterfaceItemSaved() {
+        return providedInterfaceItemSaved ? "true" : "false";
     }
 
     /**
      * add an input for the selected providedInterfaceItem
      */
     public void addInput() {
+        if (!providedInterfaceItemSaved) {
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProvidedInterfaceItemNotSaved"));
+            return;
+        }
+        selectedInput.setProvidedInterfaceItem(selectedProvidedInterfaceItem);
+        inputs.add(inputFacade.clone(selectedInput));
     }
-
-    /**
-     * removes the selected input form the selected provideInterfaceItem
-     */
-    public void removeInput() {
-    }
-
-    /**
-     * edits the selected input form the selected provideInterfaceItem
-     */
-    public void editInput() {
-    }
+    
 
     /**
      * loads the providedInterface for each component
      */
-    public void loadProvidedInterfaceForComponent() {
+    private void loadProvidedInterfaceForComponent() {
         for (int i = 0; i < components.size(); i++) {
             for (int j = 0; j < getProvidedInterfaces().size(); j++) {
                 if (components.get(i).getId().equals(providedInterfaces.get(j).getComponent().getId())) {
@@ -527,10 +441,8 @@ public class ComponentController implements Serializable {
      * loads the output for each providedInterfaceItem
      */
     public void loadOutputForProvidedInterfaceItem() {
-
         for (int i = 0; i < providedInterfaceItems.size(); i++) {
             providedInterfaceItems.get(i).setOutput(outputFacade.findOutputByProvidedInterfaceItem(providedInterfaceItems.get(i)));
-
         }
     }
 

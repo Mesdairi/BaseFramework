@@ -40,5 +40,18 @@ public class InputFacade extends AbstractFacade<Input> {
     public InputFacade() {
         super(Input.class);
     }
+    
+    private void clone(Input output, Input cloned){
+        cloned.setId(output.getId());
+        cloned.setName(output.getName());
+        cloned.setType(output.getType());
+        cloned.setProvidedInterfaceItem(output.getProvidedInterfaceItem());
+    }
+    
+    public Input clone(Input output){
+        Input cloned = new Input();
+        clone(output, cloned);
+        return cloned;
+    }
 
 }

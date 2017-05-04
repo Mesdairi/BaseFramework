@@ -27,6 +27,10 @@ public class OutputFacade extends AbstractFacade<Output> {
         return em;
     }
 
+    public OutputFacade() {
+        super(Output.class);
+    }
+
     public Output findOutputByPitm(ProvidedInterfaceItem pitm) {
 
         String query = "SELECT p.output FROM ProvidedInterfaceItem p WHERE p.id=" + pitm.getId();
@@ -36,14 +40,23 @@ public class OutputFacade extends AbstractFacade<Output> {
         }
         return output;
     }
-    
-    public Output findOutputByProvidedInterfaceItem(ProvidedInterfaceItem providedInterfaceItem){
-        String query = "SELECT o FROM Output o WHERE o.providedInterfaceItem.id="+ providedInterfaceItem.getId();
+
+    public Output findOutputByProvidedInterfaceItem(ProvidedInterfaceItem providedInterfaceItem) {
+        String query = "SELECT o FROM Output o WHERE o.providedInterfaceItem.id=" + providedInterfaceItem.getId();
         return (Output) em.createQuery(query).getResultList().get(0);
     }
-
-    public OutputFacade() {
-        super(Output.class);
+    
+    private void clone(Output output, Output cloned){
+        cloned.setId(output.getId());
+        cloned.setName(output.getName());
+        cloned.setType(output.getType());
+        cloned.setProvidedInterfaceItem(output.getProvidedInterfaceItem());
+    }
+    
+    public Output clone(Output output){
+        Output cloned = new Output();
+        clone(output, cloned);
+        return cloned;
     }
 
 }
